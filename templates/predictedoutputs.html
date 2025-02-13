@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Predictions{% endblock %}
+
+{% block content %}
+
+<!-- Animal Details Page -->
+<div class="container mt-5">
+    <h2 class="fw-bold text-center">Animal Details</h2>
+
+    <!-- {% if is_researcher %}
+        <button class="btn btn-primary">Advance Details</button>
+    {% else %}
+        <p>You need to be a researcher to access advance details.</p>
+    {% endif %} -->
+
+    <div class="row align-items-center">
+        <!-- Left Column: Predicted Animal Image -->
+        <div class="col-md-4 text-center">
+            <img src="{{ image_url }}" alt="Predicted Animal" class="img-fluid rounded shadow" style="max-width: 100%;">
+        </div>
+
+        <!-- Right Column: Animal Details -->
+        <div class="col-md-8">
+            <table class="table custom-table">
+                <tbody>
+                    <!-- Display dynamic predicted animal data -->
+                    <tr><th>Animal Name</th><td>{{ details.Animal_Name }}</td></tr>
+                    <tr class="striped"><th>Class</th><td>{{ details.Class }}</td></tr>
+                    <tr><th>Population</th><td>{{ details.Population }}</td></tr>
+                    <tr class="striped"><th>Weight</th><td>{{ details.Weight }}</td></tr>
+                    <tr><th>Length</th><td>{{ details.Length }}</td></tr>
+                    <tr class="striped"><th>Height</th><td>{{ details.Height }}</td></tr>
+                    <tr><th>Habitats</th><td>{{ details.Habitats }}</td></tr>
+                    <tr class="striped"><th>Status</th><td>{{ details.Status }}</td></tr>
+                    <tr><th>Country</th><td>{{ details.Country }}</td></tr>
+                    <tr class="striped"><th>Places</th><td>{{ details.Places }}</td></tr>
+                    <tr><th>Threats</th><td>{{ details.Threats }}</td></tr>
+                    <tr class="striped"><th>Measures Taken</th><td>{{ details.Measures_Taken }}</td></tr>
+                    <!-- Display Confidence -->
+                    <tr><th>Confidence</th><td>{{ confidence }}</td></tr>
+
+
+
+                </tbody>
+            </table>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'extrapredictions' %}" class="btn btn-primary">Advance Details</a>
+            {% else %}
+                <p>You need to be a researcher to access advanced details.</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+   
+
+
+    <!-- Display Population Trend if available -->
+    <!-- {% if show_population_trend %}
+    <div class="mt-5">
+        <h4>Population Trend for {{ details.Animal_Name }}</h4>
+        <img src="data:image/png;base64,{{ img_base64 }}" alt="Population Trend" class="img-fluid rounded shadow" />
+        <table class="table custom-table mt-3">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Population</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for year, population in population_data %}
+                <tr>
+                    <td>{{ year }}</td>
+                    <td>{{ population }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div> -->
+
+<!-- Custom Styling -->
+<style>
+    .custom-table {
+        background: transparent !important;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .custom-table th, .custom-table td {
+        background: rgba(255, 255, 255, 0.1); /* Light transparency */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Soft borders */
+        padding: 10px;
+        color: white; /* Ensures visibility on dark backgrounds */
+    }
+    .custom-table thead th {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    .custom-table .striped {
+        background: rgba(255, 255, 255, 0.15); /* Slightly darker for striped effect */
+    }
+</style>
+
+{% endblock %}

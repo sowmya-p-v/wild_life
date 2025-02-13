@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <section>
+        <div class="container main-container" style="margin-top: 20px;">
+            <div class="row align-items-center">
+                <!-- Image Section -->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+
+                    <img 
+                    src="{% static 'images/WildLife3.jpg' %}" 
+                    alt="Wildlife Logo" 
+                    class="img-fluid" 
+                    style="height: 560px; max-width: 100%; object-fit: cover; margin-left: 50px; border-radius: 6px; box-shadow: 3px 3px 12px rgb(41, 41, 41);">
+                        
+                </div>
+    
+                <!-- Registration Form Section -->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="container form-container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 custom-width">
+                                <div class="card shadow-lg">
+                                    <div class="card-body">
+                                        <form action="" method="POST" enctype="multipart/form-data" class="row g-3" style="height: 500px;">
+                                            <!-- CSRF Token -->
+                                            {% csrf_token %}
+                
+                                            <!-- Username and Email -->
+                                            <div class="col-md-6">
+                                                <label for="username" class="form-label">Username</label>
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="username" 
+                                                    name="username" 
+                                                    placeholder="Enter your username" 
+                                                    required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input 
+                                                    type="email" 
+                                                    class="form-control" 
+                                                    id="email" 
+                                                    name="email" 
+                                                    placeholder="Enter your email" 
+                                                    required>
+                                            </div>
+                
+                                            <!-- Phone and City -->
+                                            <div class="col-md-6">
+                                                <label for="phone" class="form-label">Phone Number</label>
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="phone" 
+                                                    name="phone" 
+                                                    placeholder="Enter your phone number" 
+                                                    required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="city" class="form-label">City</label>
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="city" 
+                                                    name="city" 
+                                                    placeholder="Enter your city" 
+                                                    required>
+                                            </div>
+                
+                                            <!-- Address -->
+                                            <div class="col-md-12">
+                                                <label for="address" class="form-label">Address</label>
+                                                <textarea 
+                                                    class="form-control" 
+                                                    id="address" 
+                                                    name="address" 
+                                                    rows="2" 
+                                                    placeholder="Enter your address" 
+                                                    required></textarea>
+                                            </div>
+                
+                                            <!-- Postal Code -->
+                                            <div class="col-md-6">
+                                                <label for="postal_code" class="form-label">Postal Code</label>
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="postal_code" 
+                                                    name="postal_code" 
+                                                    placeholder="Enter your postal code" 
+                                                    required>
+                                            </div>
+                
+                                            <!-- Password and Confirm Password -->
+                                            <div class="col-md-6">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input 
+                                                    type="password" 
+                                                    class="form-control" 
+                                                    id="password" 
+                                                    name="password" 
+                                                    placeholder="Enter your password" 
+                                                    required>
+                                            </div>
+                
+                                            <!-- Submit Button -->
+                                            <div class="col-md-12 text-center">
+                                                <button type="submit" class="btn btn-success w-100">Register</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <small>Already have an account? <a href="{% url 'login' %}" class="text-success">Login here</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endblock %}
+

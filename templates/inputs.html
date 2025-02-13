@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Input{% endblock %}
+
+{% block content %}
+
+<section>
+
+    <div class="container mt-5 text-center">
+        <h1 class="mb-4 fw-bold">Animal Classification and Insights</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data" class="d-flex justify-content-center">
+            {% csrf_token %}
+            <input type="file" name="image" class="form-control w-50">
+            <button type="submit" class="btn btn-primary ms-3">Predict</button>
+        </form>
+    </div>
+
+</section>
+
+     
+    {% endblock %}

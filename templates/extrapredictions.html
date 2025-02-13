@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Extra Predictions{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        text-align: center;
+    }
+    canvas {
+        max-width: 100%;
+    }
+    .abc {
+        display: flex;
+        justify-content: space-between;
+        height: 500px;
+        width: auto;
+    }
+    .custom-table {
+        background: transparent !important;
+        border-collapse: collapse;
+    }
+    .custom-table th, .custom-table td {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 10px;
+        color: white;
+    }
+    .custom-table thead th {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    .custom-table .striped {
+        background: rgba(255, 255, 255, 0.15);
+    }
+    /* Visual Details Card Styles */
+    .details-card {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 900px;
+    }
+    .details-item {
+        flex: 1 1 150px;
+        margin: 10px;
+        padding: 15px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .details-item h4 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        padding-bottom: 5px;
+    }
+    .details-item p {
+        font-size: 16px;
+        margin: 0;
+    }
+</style>
+
+<!-- Visual Predicted Animal Details -->
+<div class="container mt-5">
+    {% if details %}
+        <h2 class="fw-bold">Prediction Results for {{ details.Animal_Name }}</h2>
+        <div class="details-card">
+            <div class="details-item">
+                <h4>Class</h4>
+                <p>{{ details.Class }}</p>
+            </div>
+            <div class="details-item">
+                <h4>Habitat</h4>
+                <p>{{ details.Habitats }}</p>
+            </div>
+            <div class="details-item">
+                <h4>Status</h4>
+                <p>{{ details.Status }}</p>
+            </div>
+            <div class="details-item">
+                <h4>Country</h4>
+                <p>{{ details.Country }}</p>
+            </div>
+            <div class="details-item">
+                <h4>Confidence</h4>
+                <p>{{ confidence }}</p>
+            </div>
+        </div>
+    {% else %}
+        <p>No prediction data available. Please run a prediction first.</p>
+    {% endif %}
+</div>
+
+<!-- Population Trend Section -->
+<div class="container mt-5">
+    {% if details %}
+        <h2 class="fw-bold">Population Trend for {{ details.Animal_Name }}</h2>
+    {% else %}
+        <h2 class="fw-bold">Population Trend</h2>
+    {% endif %}
+    <br><br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="abc">
+                <canvas id="populationChart" width="600" height="400"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Population</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if population_data and population_data|length > 0 %}
+                        {% for year, pop in population_data %}
+                            <tr class="{% cycle 'striped' '' %}">
+                                <td>{{ year }}</td>
+                                <td>{{ pop }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="2">No population trend data available for this animal.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    {% if population_data and population_data|length > 0 %}
+        // Convert population_data (a list of [year, population] pairs) into separate arrays.
+        const populationData = {{ population_data|safe }};
+        const years = populationData.map(item => item[0]);
+        const population = populationData.map(item => item[1]);
+    {% else %}
+        const years = [];
+        const population = [];
+    {% endif %}
+
+    // Create the Chart.js line chart.
+    var ctx = document.getElementById('populationChart').getContext('2d');
+    var populationChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: years,
+            datasets: [{
+                label: 'Population',
+                data: population,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        position: 'top',
+                        color: 'white'
+                    }
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'white'
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.2)'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: 'white'
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.2)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

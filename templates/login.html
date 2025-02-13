@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Background image styling */
+    .login-background {
+        background: url("{% static 'images\WildLife Login.jpg' %}") no-repeat bottom center/cover;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Card styling */
+    .login-card {
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 10px;
+        box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.4);
+        padding: 30px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    /* Form fields */
+    .form-label {
+        font-weight: bold;
+    }
+
+    .btn-success {
+        background-color: #508D4E;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #3b6d3c;
+    }
+
+    .card-footer a {
+        text-decoration: none;
+    }
+</style>
+
+<section class="login-background">
+    <div class="login-card">
+        <div class="text-center mb-4">
+            <h4>Welcome Back!</h4>
+            <p class="text-muted">Login to your account</p>
+        </div>
+        <form action="/login/" method="POST" class="row g-3">
+            {% csrf_token %}
+            <!-- Username or Email -->
+            <div class="col-md-12">
+                <label for="username_email" class="form-label">Username or Email</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Enter your email" 
+                    required>
+            </div>
+
+            <!-- Password -->
+            <div class="col-md-12">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password" 
+                    required>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="col-md-12">
+                <div class="form-check">
+                    <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="remember_me" 
+                        name="remember_me">
+                    <label class="form-check-label" for="remember_me">Remember Me</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success w-100">Login</button>
+            </div>
+        </form>
+
+        <div class="card-footer text-center mt-3">
+            <small>Don't have an account? <a href="/register/" class="text-success">Register here</a></small><br>
+            <small><a href="/password-reset/" class="text-success">Forgot Password?</a></small>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
